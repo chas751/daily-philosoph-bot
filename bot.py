@@ -7,7 +7,7 @@ from telegram.ext import (
 )
 
 # ============================
-# ВСТАВЬТЕ СВОЙ ТОКЕН СЮДА
+# ВС8228885470:AAFxS7h1Y5bYxSyjhAVG7FIahdSaJCoESBsТАВЬТЕ СВОЙ ТОКЕН СЮДА
 # ============================
 TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
 
