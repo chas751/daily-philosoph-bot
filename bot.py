@@ -9,7 +9,7 @@ from telegram.ext import (
 # ============================
 # ВС8228885470:AAFxS7h1Y5bYxSyjhAVG7FIahdSaJCoESBsТАВЬТЕ СВОЙ ТОКЕН СЮДА
 # ============================
-TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
+TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"8228885470:AAFxS7h1Y5bYxSyjhAVG7FIahdSaJCoESBs
 
 # Реквизиты
 VTB_CARD = "YOUR_VTB_CARD"
