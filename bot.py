@@ -7,13 +7,16 @@ from telegram.ext import (
 )
 
 # ============================
-# ВС8228885470:AAFxS7h1Y5bYxSyjhAVG7FIahdSaJCoESBsТАВЬТЕ СВОЙ ТОКЕН СЮДА
+#  ТЕЛЕГРАМ-ТОКЕН
 # ============================
-TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"8228885470:AAFxS7h1Y5bYxSyjhAVG7FIahdSaJCoESBs
+TELEGRAM_BOT_TOKEN = "8228885470:AAFxS7h1Y5bYxSyjhAVG7FIahdSaJCoESBs"
 
-# Реквизиты
-VTB_CARD = "YOUR_VTB_CARD"2200 2460 3013 9912
+# ============================
+#  РЕКВИЗИТЫ
+# ============================
+VTB_CARD = "2200 2460 3013 9912"
 TRX_WALLET = "TErjzxxbTg1uvhEDBzpnvDr2p3g1RRw5Pd"
+
 
 DB_PATH = "quotes.db"
 
