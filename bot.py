@@ -1,69 +1,46 @@
+import asyncio
+from aiogram import Bot, Dispatcher
+from aiogram.types import Message
+from aiogram.filters import Command
+import random
 
-import os
-import sqlite3
-from telegram import Update
-from telegram.ext import (
-    ApplicationBuilder, CommandHandler, ContextTypes
-)
-
-# ============================
-#  ТЕЛЕГРАМ-ТОКЕН
-# ============================
+# ========= ТВОЙ ТОКЕН =========
 TELEGRAM_BOT_TOKEN = "8228885470:AAFxS7h1Y5bYxSyjhAVG7FIahdSaJCoESBs"
 
-# ============================
-#  РЕКВИЗИТЫ
-# ============================
+# ========= РЕКВИЗИТЫ =========
 VTB_CARD = "2200 2460 3013 9912"
 TRX_WALLET = "TErjzxxbTg1uvhEDBzpnvDr2p3g1RRw5Pd"
 
+# ========= ЦИТАТЫ =========
+QUOTES = [
+    "Мудрость начинается с удивления.",
+    "Мы становимся тем, о чём думаем.",
+    "Человек — это то, что он делает."
+]
 
-DB_PATH = "quotes.db"
+bot = Bot(token=TELEGRAM_BOT_TOKEN)
+dp = Dispatcher()
 
-def get_random_quote():
-    conn = sqlite3.connect(DB_PATH)
-    cur = conn.cursor()
-    cur.execute("SELECT text FROM quotes ORDER BY RANDOM() LIMIT 1;")
-    row = cur.fetchone()
-    conn.close()
-    if row:
-        return row[0]
-    return "Цитаты в базе отсутствуют."
-
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+# /start
+@dp.message(Command("start"))
+async def start(message: Message):
     text = (
-        "Привет! Я философский бот.\"" + "\n\n" +
-        "💳 *Карта ВТБ:* `" + VTB_CARD + "`\n" +
-        "🔗 *USDT (TRC20):* `" + TRX_WALLET + "`\n"
+        "Привет! Я философский бот.\n\n"
+        "💬 Напиши /quote чтобы получить цитату.\n\n"
+        "💵 *Донаты:*\n"
+        f"💳 ВТБ: `{VTB_CARD}`\n"
+        f"🔗 USDT (TRC20): `{TRX_WALLET}`"
     )
-    await update.message.reply_text(text, parse_mode="Markdown")
+    await message.answer(text, parse_mode="Markdown")
 
-async def quote(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(get_random_quote())
+# /quote
+@dp.message(Command("quote"))
+async def quote(message: Message):
+    await message.answer(random.choice(QUOTES))
 
-async def send_daily_quote(context: ContextTypes.DEFAULT_TYPE):
-    chat_id = context.job.data["chat_id"]
-    await context.bot.send_message(chat_id, get_random_quote())
-
-async def subscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    chat_id = update.message.chat_id
-    context.job_queue.run_daily(
-        send_daily_quote,
-        time=datetime.time(hour=9, minute=0),
-        data={"chat_id": chat_id},
-        name=f"daily_{chat_id}"
-    )
-    await update.message.reply_text("Вы подписались на ежедневные цитаты!")
-
-def main():
-    app = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
-
-    app.add_handler(CommandHandler("start", start))
-    app.add_handler(CommandHandler("quote", quote))
-    app.add_handler(CommandHandler("subscribe", subscribe))
-
-    print("Бот запущен!")
-    app.run_polling()
+async def main():
+    print("BOT STARTED...")
+    await dp.start_polling(bot)
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
